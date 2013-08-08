@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   # this is where we need user authentication stuff
   include BCrypt
 
+  has_many :urls
 
   def password
     @password ||= Password.new(password_hash)
@@ -14,5 +15,9 @@ class User < ActiveRecord::Base
 
   def self.log_up_new_user(params)
     User.create(params)
+  end
+
+  def self.find_user_urls(id)
+    User.find(id).urls
   end
 end

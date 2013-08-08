@@ -1,7 +1,35 @@
 <div class="container">
+  <h1>Shorten yo Url, Bitch!!</h1>
+  
+  <% if @url %>
+
+   <p>Your shortened url <a href=" <%=@url.long_name%>"><%= @url.short_name %></a></p>
+  <% end %>
+
+  <form action="/urls" method="post">
+    <input type="text" name="user_input" value="http://">
+    <input type="submit" value="CLICK ME, SUCKA!"> 
+  </form>
+  <% if @user_urls %>
+  <ul>
+    <% @user_urls.each do |url| %>
+      <li>
+        <h4><a href="/<%=url.short_name %>"><%= url.short_name %></a></h4>
+      </li>
+    <% end %>
+  </ul>
+  <% end %>
   <% if current_user == nil %>
-  <h1>Welcome to Dummy Users, Dummy!</h1>
-  <p>What up, bitches!?</p>
+
+  <ul>
+  <% if @urls %>
+    <% @urls.each do |url| %>
+      <li>
+        <h4><a href="/<%= url.short_name %>"><%=url.short_name %></a></h4>
+      </li>
+    <% end %>
+  <% end %>
+  </ul>
 
   <h2>Login!</h2>
   <form action="/login" method="post">
