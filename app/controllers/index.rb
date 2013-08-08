@@ -1,29 +1,24 @@
 get '/' do
-  # let user create new short URL, display a list of shortened URLs
-  @urls = Url.order('created_at DESC')
+  # Look in app/views/index.erb
+
   erb :index
 end
 
-get '/error' do
-  erb :error
-end
+get '/logout' do
 
-post '/urls' do
-  # create a new Url
-  @url = Url.new_url(params)
-  if @url.valid?
-    @url.save
-  else
-    redirect '/error'
-  end
+  session[:user_id] = nil
   redirect '/'
 end
 
-# e.g., /q6bda
-get '/:short_url' do
- @clicked_url = Url.find_url(params[:short_url])
- @clicked_url.click_count += 1
- @clicked_url.save
- @address = @clicked_url.long_name
-  redirect "#{@address}"
+post '/login' do
+  
+  login
+  redirect "/"
+end
+
+post '/logup' do
+
+  @user = User.log_up_new_user(params[:user])
+  login
+  redirect "/"
 end
