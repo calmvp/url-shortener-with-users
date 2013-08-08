@@ -6,9 +6,8 @@ class Url < ActiveRecord::Base
   validates :long_name, presence: true
   validates_format_of :long_name, :with => URI::regexp(%w(http https))
   
-
   before_create :generate_shortened_url
-  # Remember to create a migration!
+
   
   def generate_shortened_url
     short = 5.times.map { (rand(0..25) + 97).chr }.join

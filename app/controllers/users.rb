@@ -1,5 +1,4 @@
 get '/' do
-  # Look in app/views/index.erb
   if current_user
     @user_urls = User.find_user_urls(current_user.id)
   end
